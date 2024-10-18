@@ -3,10 +3,10 @@ import mysql.connector
 class DisciplinasCRUD:
     def __init__(self):
         self.db = mysql.connector.connect(
-            host="localhost",
-            user="yourusername",
-            password="yourpassword",
-            database="yourdatabase"
+            host='localhost',
+            database='faculdade',
+            user='root',
+            password='123mudar'
         )
         self.cursor = self.db.cursor()
 
@@ -17,12 +17,11 @@ class DisciplinasCRUD:
         self.db.commit()
         print("Disciplina created successfully.")
 
-    def read_disciplinas(self):
-        query = "SELECT * FROM Disciplinas"
-        self.cursor.execute(query)
-        records = self.cursor.fetchall()
-        for row in records:
-            print(row)
+    def read_disciplina(self, id_disci):
+        query = "SELECT * FROM Disciplinas WHERE ID_DISCI = %s"
+        self.cursor.execute(query, (id_disci,))
+        return self.cursor.fetchone()
+        
 
     def update_disciplina(self, id_disci, disciplina, carga_horaria, id_prof_fk):
         query = "UPDATE Disciplinas SET DISCIPLINA = %s, CARGA_HORARIA = %s, ID_PROF_FK = %s WHERE ID_DISCI = %s"

@@ -1,14 +1,14 @@
 import mysql.connector
 from mysql.connector import Error
 
-class Database:
+class ProfessorCRUD:
     def __init__(self):
         try:
             self.connection = mysql.connector.connect(
                 host='localhost',
-                database='your_database',
-                user='your_user',
-                password='your_password'
+                database='faculdade',
+                user='root',
+                password='123mudar'
             )
             if self.connection.is_connected():
                 print("Connected to MySQL database")
@@ -21,10 +21,10 @@ class Database:
         cursor.execute(query, (nome, email, fone))
         self.connection.commit()
 
-    def read_professores(self):
+    def read_professor(self, id_prof):
         cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Professores")
-        return cursor.fetchall()
+        cursor.execute("SELECT * FROM Professores where id_prof=%s", (id_prof,))
+        return cursor.fetchone()
 
     def update_professor(self, id_prof, nome, email, fone):
         cursor = self.connection.cursor()
